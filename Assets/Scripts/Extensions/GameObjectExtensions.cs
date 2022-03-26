@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +18,61 @@ namespace Boxfriend.Extensions
                 child.gameObject.SetLayerRecursively(layer);
             }
         }
+		
+        /// <summary>
+        /// Returns the first child of the current GameObject that has the specified tag. Does not include itself.
+        /// </summary>
+		public static GameObject FindChildWithTag(this GameObject obj, string tag)
+		{
+			foreach(Transform child in obj.transform)
+			{
+				if(child.gameObject == obj) continue;
+				
+				if(child.CompareTag(tag))
+					return child.gameObject;
+			}
+			
+			return null;
+		}
+		
+        /// <summary>
+        /// Returns an array containing all children of the current GameObject that have the specified tag. Does not include itself.
+        /// </summary>
+		public static GameObject[] FindChildrenWithTag(this GameObject obj, string tag)
+		{
+			var taggedArray = new GameObject[obj.transform.childCount];
+			var index = 0;
+			foreach(Transform child in obj.transform)
+			{
+				if(child.CompareTag(tag))
+				{
+					taggedArray[index] = child.gameObject;
+					index++;
+				}
+			}
+			
+			if(index == 0) return null;
+
+			Array.Resize(ref taggedArray, index);
+			return taggedArray;
+		}
+		
+        /// <summary>
+        /// Returns a List containing all children of the current GameObject that have the specified tag. Does not include itself.
+        /// </summary>
+		public static List<GameObject> FindChildrenWithTagList(this GameObject obj, string tag)
+		{
+			var taggedList = new List<GameObject>();
+			
+			foreach(Transform child in obj.transform)
+			{
+				if(child.gameObject == obj) continue;
+				
+				if(child.CompareTag(tag))
+					taggedList.Add(child.gameObject);
+			}
+			return taggedList;
+		}
 
         
         /// <summary>
