@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Boxfriend.Utils
 {
+	/// <summary>
+	///	Pools objects of type T, will create new objects as necessary
+	/// </summary>
     public class ObjectPool<T> where T : class
     {
         private readonly Stack<T> _stack = new ();
@@ -26,14 +29,14 @@ namespace Boxfriend.Utils
         public ObjectPool (Func<T> createObject, Action<T> getObjectFromPool, Action<T> returnObjectToPool, Action<T> onDestroyObject = null, int defaultSize = 10, int maxSize = 100)
         {
             if (maxSize < defaultSize)
-                throw new ArgumentOutOfRangeException("maxSize", "maxSize must be greater than or equal to defaultSize");
+                throw new ArgumentOutOfRangeException(nameof(maxSize), "maxSize must be greater than or equal to defaultSize");
 
             if (defaultSize < 0)
-                throw new ArgumentOutOfRangeException("defaultSize", "defaultSize must be greater than or equal to 0");
+                throw new ArgumentOutOfRangeException(nameof(defaultSize), "defaultSize must be greater than or equal to 0");
             
-            _returnObjectToPool = returnObjectToPool ?? throw new ArgumentNullException("returnToPool");
-            _getObjectFromPool = getObjectFromPool ?? throw new ArgumentNullException("getObjectFromPool");
-            _objectCreator = createObject ?? throw new ArgumentNullException("createObject");
+            _returnObjectToPool = returnObjectToPool ?? throw new ArgumentNullException(nameof(returnObjectToPool));
+            _getObjectFromPool = getObjectFromPool ?? throw new ArgumentNullException(nameof(getObjectFromPool));
+            _objectCreator = createObject ?? throw new ArgumentNullException(nameof(createObject));
             _destroyObject = onDestroyObject;
 
             _maxSize = maxSize;
@@ -60,7 +63,7 @@ namespace Boxfriend.Utils
         /// <param name="item">Item to be added</param>
         public void ToPool (T item)
         {
-            if (item == null) throw new ArgumentNullException("item");
+            if (item == null) throw new ArgumentNullException(nameof(item));
 
             _returnObjectToPool(item);
 
