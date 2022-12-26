@@ -86,5 +86,18 @@ namespace Boxfriend.Extensions
             for (var i = 0; i < children.Length; i++)
                 GameObject.Destroy(children[i].gameObject);
         }
+		
+		///<summary>
+		/// Checks if a GameObject is tagged with any of the strings in the provided collection
+		///</summary>
+		public static bool CompareTags(this GameObject go, IEnumerable<string> tags)
+		{
+			foreach (var tag in tags)
+			{
+				if (go.CompareTag(tag))
+					return true;
+			}
+			return false;
+		}
     }
 }
