@@ -9,15 +9,27 @@ namespace Boxfriend.Utils
 
 		public static T Instance
 		{
-			get => _instance;
-			private set {
+			get
+			{
+				if( _instance == null )
+				{
+					var go = new GameObject();
+					go.AddComponent<T>();
+					go.name = typeof(T).Name;
+				}
+
+				return _instance;
+			}
+
+			private set
+			{
 				if (_instance == null)
 					_instance = value;
 				else if (value != _instance)
 					Destroy(value.gameObject);
 			}
 		}
-        
+
 		protected virtual void Awake ()
 		{
 			Instance = this as T;
