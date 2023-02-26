@@ -6,7 +6,7 @@ namespace Boxfriend.Utils
 {
     public class AudioManager : SingletonBehaviour<AudioManager>
     {
-        private ObjectPool<AudioSource> _sources;
+        private ObjectPoolCircular<AudioSource> _sources;
 
         [SerializeField] private AudioMixerGroup _audioMixer;
 
@@ -15,7 +15,7 @@ namespace Boxfriend.Utils
         {
             base.Awake();
 
-            _sources = new ObjectPool<AudioSource>(Create, x => x.enabled = true, ReturnSource, DestroySource, 10, 32);
+            _sources = new ObjectPoolCircular<AudioSource>(Create, x => x.enabled = true, ReturnSource, DestroySource, 32);
         }
 
         private AudioSource Create()
