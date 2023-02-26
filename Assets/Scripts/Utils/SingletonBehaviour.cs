@@ -32,7 +32,7 @@ namespace Boxfriend.Utils
 
 		protected virtual void Awake ()
 		{
-			Instance = this as T;
+			Instance = (T)this;
             
 			if(_dontDestroy)
 				DontDestroyOnLoad(gameObject);
