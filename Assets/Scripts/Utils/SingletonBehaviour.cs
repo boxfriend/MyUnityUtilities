@@ -13,9 +13,8 @@ namespace Boxfriend.Utils
 			{
 				if( _instance == null )
 				{
-					var go = new GameObject();
+					var go = new GameObject(typeof(T).Name);
 					go.AddComponent<T>();
-					go.name = typeof(T).Name;
 				}
 
 				return _instance;
@@ -32,7 +31,7 @@ namespace Boxfriend.Utils
 
 		protected virtual void Awake ()
 		{
-			Instance = this as T;
+			Instance = (T)this;
             
 			if(_dontDestroy)
 				DontDestroyOnLoad(gameObject);
