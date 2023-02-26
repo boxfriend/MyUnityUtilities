@@ -12,4 +12,13 @@ public static class TransformExtensions
 		}
 		return null;
 	}
+	
+	public static void UnparentAll(this Transform transform)
+	{
+		foreach(Transform child in transform)
+		{
+			child.UnparentAll();
+		}
+		transform.SetParent(null);
+	}
 }
